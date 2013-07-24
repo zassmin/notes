@@ -6,6 +6,12 @@ get '/' do
   erb :index
 end
 
+get '/note/show/:id' do 
+  @note = Note.find(params[:id])
+
+  erb :note_show
+end
+
 get '/new' do
   @note = Note.new
 
@@ -13,12 +19,14 @@ get '/new' do
 end
 
 post '/new' do 
-  @note = Note.create(params[:user])
-  if @note.valid?
-    redirect '/'
-  else
-    "raise errors"
-  end
+  p "these are the parameters #{params[:note]}"
+  @note = Note.create(params[:note])
+  redirect '/'
+  # if @note.valid?
+  #   redirect '/'
+  # else
+  #   flash[:notify] = "invalid!"
+  # end
 end
 
 get '/edit/:id' do |id|
