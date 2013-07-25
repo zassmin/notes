@@ -23,16 +23,15 @@ post '/new' do
   end
 end
 
-get '/edit/:id' do |id|
+get '/edit/:id' do
   @note = Note.find(params[:id])
-  # form will look like creating a note expect button will be saving form
   erb :edit
 end
 
 put '/update/:id' do 
   @note = Note.find(params[:id])
   @note.update_attributes(params[:note])
-  if @note.valid? # don't know if validations work on update so will check
+  if @note.valid? 
     redirect '/'
   else
     "raise errors"
@@ -41,9 +40,6 @@ end
 
 delete '/delete/:id' do
   @note = Note.find(params[:id])
-  if @note.delete
-    redirect '/'
-  else
-    flash[:notify] = "didn't delete!" # this flash thing just hasn't been working for me
-  end
+  @note.delete
+  redirect '/'
 end
