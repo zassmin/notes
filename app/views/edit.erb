@@ -1,0 +1,5 @@
+<h1>edit your note</h1>
+<form action='/update/<%= @note.id %>' method='post'>
+<input type="hidden" name="_method" value="put" />
+<%= erb :_form %>
+</form>

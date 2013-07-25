@@ -1,6 +1,4 @@
 get '/' do
-  # Look in app/views/index.erb
-  # this will have a dashboard to let you click on creating a note, editing, updating and deleting
   @notes = Note.all
 
   erb :index
@@ -13,26 +11,22 @@ get '/note/show/:id' do
 end
 
 get '/new' do
-  @note = Note.new
-
   erb :new
 end
 
 post '/new' do 
-  p "these are the parameters #{params[:note]}"
   @note = Note.create(params[:note])
-  redirect '/'
-  # if @note.valid?
-  #   redirect '/'
-  # else
-  #   flash[:notify] = "invalid!"
-  # end
+  if @note.valid?
+    redirect '/'
+  else
+    flash[:notify] = "invalid!"
+  end
 end
 
 get '/edit/:id' do |id|
   @note = Note.find(params[:id])
   # form will look like creating a note expect button will be saving form
-  erb :index
+  erb :edit
 end
 
 put '/update/:id' do 
